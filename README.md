@@ -16,7 +16,7 @@ It provides an easy way for users to create, edit, and manage blog posts with a 
 - **Deployment:** GitHub Pages (Frontend), Appwrite Cloud / Self-hosted  
 
 ## 🌍 Live Demo
-🔗 [Click here to view MegaBlog](https://isha1shah.github.io/megablog/)  
+🔗 [Click here to view MegaBlog](https://megablog-kpl4.onrender.com)
 
 ## 📂 Project Setup
 
