@@ -104,7 +104,11 @@ getFileView(fileId) {
 
 getFilePreview(fileId) {
     if (!fileId) return null;
-    return `${conf.appwriteUrl}/v1/storage/buckets/${conf.bucketId}/files/${fileId}/preview?project=${conf.appwriteProjectId}`;
+
+    return this.bucket.getFilePreview(
+        conf.appwriteBucketId,
+        fileId
+    );
 }
 
 // Direct URL generator as backup

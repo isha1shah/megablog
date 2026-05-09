@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <BrowserRouter> {/* REMOVE basename="/megablog/" */}
         <Routes>
-          <Route path="/" element={<App />}>
+          <Route path="/*" element={<App />} >
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} /> {/* Fixed capitalization */}

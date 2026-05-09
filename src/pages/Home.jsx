@@ -25,7 +25,7 @@ function Home() {
     const PostImage = ({ post }) => {
         const [imageError, setImageError] = useState(false);
         
-        if (!post.featuredImage || imageError) {
+        if (!post.featuredimage || imageError) {
             return (
                 <div className="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 rounded-t-xl flex items-center justify-center">
                     <span className="text-gray-500 text-4xl">📷</span>
@@ -34,13 +34,11 @@ function Home() {
         }
 
         return (
-            <img 
-                src={service.getFileView(post.featuredImage)} 
-                alt={post.title}
-                className="w-full h-48 object-cover rounded-t-xl"
-                onError={() => setImageError(true)}
-                onLoad={() => console.log('Image loaded:', post.featuredImage)}
-            />
+            <img
+    src={service.getFilePreview(post.featuredimage)}
+    alt={post.title}
+    className="w-full h-48 object-cover rounded-t-xl"
+/>
         );
     };
 

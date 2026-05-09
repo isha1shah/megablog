@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Input, RTE, Select, Button } from "..";
@@ -26,10 +25,11 @@ export default function PostForm({ post }) {
 
     const submit = async (data) => {
         setLoading(true);
-        
-        try {
-            let featuredImageId = post?.featuredimage;
 
+        try {
+            let featuredImageId = post?.featuredimage;   // ✅ FIXED
+
+            // upload new image if selected
             if (data.image?.[0]) {
                 const file = await appwriteService.uploadFile(data.image[0]);
                 featuredImageId = file.$id;
@@ -43,7 +43,7 @@ export default function PostForm({ post }) {
                 title: data.title,
                 content: data.content,
                 status: data.status,
-                featuredimage: featuredImageId,
+                featuredimage: featuredImageId,   
                 userId: userData.$id,
             };
 
@@ -52,7 +52,7 @@ export default function PostForm({ post }) {
             } else {
                 await appwriteService.createPost(postData);
             }
-            
+
             navigate("/");
         } catch (error) {
             alert("Error saving post: " + error.message);
@@ -66,58 +66,46 @@ export default function PostForm({ post }) {
         if (file) {
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
-        } else {
-            setImagePreview(null);
         }
     };
-
-    if (!userData) {
-        return <div>Redirecting...</div>;
-    }
 
     return (
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-4xl mx-auto px-4">
                 <div className="bg-white rounded-lg shadow p-6">
-                    <h1 className="text-2xl font-bold mb-6">
-                        {post ? "Edit Post" : "Create Post"}
-                    </h1>
 
                     <form onSubmit={handleSubmit(submit)} className="space-y-6">
+
                         <Input
                             label="Title"
-                            placeholder="Post title"
                             {...register("title", { required: true })}
-                            error={errors.title?.message}
                         />
 
-                        <div>
-                            <label className="block text-sm font-medium mb-2">Content</label>
-                            <RTE name="content" control={control} />
-                        </div>
+                        <RTE name="content" control={control} />
 
                         <Input
-                            label="Featured Image"
                             type="file"
                             accept="image/*"
-                            {...register("image", { required: !post })}
+                            {...register("image")}
                             onChange={handleImageChange}
-                            error={errors.image?.message}
                         />
 
                         {imagePreview && (
-                            <img src={imagePreview} alt="Preview" className="h-32 object-cover rounded" />
+                            <img
+                                src={imagePreview}
+                                className="h-32 object-cover rounded"
+                            />
                         )}
 
                         <Select
                             options={["active", "inactive"]}
-                            label="Status"
-                            {...register("status", { required: true })}
+                            {...register("status")}
                         />
 
-                        <Button type="submit" disabled={loading} className="w-full">
-                            {loading ? "Saving..." : (post ? "Update" : "Create")}
+                        <Button type="submit" disabled={loading}>
+                            {loading ? "Saving..." : "Save Post"}
                         </Button>
+
                     </form>
                 </div>
             </div>
